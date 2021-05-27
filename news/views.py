@@ -1,8 +1,30 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.views.generic import ListView
 
 from .models import News, Category
 from .forms import NewsForm
+
+
+class HomeNews(ListView):
+    model = News  # екземпляр модели
+    template_name = 'news/home_news_list.html'  # путь к шаблону
+    context_object_name = 'news'  # имя обьекта с которым нужно работать вместо object_list
+    # extra_context = {'title': 'Главная'}  # только для передачи статичних данных
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Используеться для работы с динамическими данными
+        """
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
+
+    def get_queryset(self):
+        """
+        Изменяем дефолтний запрос (вывод не всех запесей, а только опубликованих)
+        """
+        return News.objects.filter(is_published=True)
 
 
 def index(request):
