@@ -1,5 +1,8 @@
 <div class="list-group">
     {% for item in categories %}
-    <a href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">{{ item.title }}</a>
+    <a href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">{{ item.title }}
+        <!--<span class="badge badge-primary badge-pill">{{ item.cnt }}</span>-->
+        <span class="badge rounded-pill bg-primary">{{ item.cnt }}</span>
+    </a>
     {% endfor %}
 </div>
