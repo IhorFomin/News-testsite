@@ -12,6 +12,7 @@ class HomeNews(ListView):
     template_name = 'news/home_news_list.html'  # путь к шаблону
     context_object_name = 'news'  # имя обьекта с которым нужно работать вместо object_list
     # extra_context = {'title': 'Главная'}  # только для передачи статичних данных
+    # queryset = News.objects.select_related('category') # уменьшение дублей SQL запросов
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """
@@ -25,7 +26,7 @@ class HomeNews(ListView):
         """
         Изменяем дефолтний запрос (вывод не всех запесей, а только опубликованих)
         """
-        return News.objects.filter(is_published=True)
+        return News.objects.filter(is_published=True).select_related('category')
 
 
 class NewsByCategory(ListView):
@@ -40,7 +41,7 @@ class NewsByCategory(ListView):
         return context
 
     def get_queryset(self):
-        return News.objects.filter(category_id=self.kwargs['category_id'], is_published=True)
+        return News.objects.filter(category_id=self.kwargs['category_id'], is_published=True).select_related('category')
 
 
 class ViewNews(DetailView):
