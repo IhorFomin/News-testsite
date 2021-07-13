@@ -12,7 +12,7 @@ from .utils import MyMixin
 
 def test(request):
     """
-    Реализация пажинации с помощью функции
+    Реализация пагинации с помощью функции
     """
     objects = ['john1', 'paul2', 'george3', 'ringo4', 'john5', 'paul6', 'george7']
     paginator = Paginator(objects, 2)
@@ -28,6 +28,7 @@ class HomeNews(MyMixin, ListView):
     # extra_context = {'title': 'Главная'}  # только для передачи статичних данных
     # queryset = News.objects.select_related('category') # уменьшение дублей SQL запросов
     mixin_prop = 'hello world'
+    paginate_by = 2  # пагинация с использованием класса
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """
@@ -50,6 +51,7 @@ class NewsByCategory(MyMixin, ListView):
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
     allow_empty = False  # запред показа пустих списков (страниц)
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
