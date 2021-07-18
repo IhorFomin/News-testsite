@@ -8,6 +8,33 @@ from django.core.paginator import Paginator
 from .models import News, Category
 from .forms import NewsForm
 from .utils import MyMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+
+def register(request):
+    """
+    Рендерит страницу регистрации register.html
+    Создает форму для регистрации пользователя и передаем ее в контекст
+    """
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Вы успешно зарегистрировались')
+            return redirect('login')
+        else:
+            messages.error(request, 'Ошибка регистрации')
+    else:
+        form = UserCreationForm()
+    return render(request, 'news/register.html', {"form": form})
+
+
+def login(request):
+    """
+    Рендерит страницу регистрации login.html
+    """
+    return render(request, 'news/login.html')
 
 
 def test(request):
