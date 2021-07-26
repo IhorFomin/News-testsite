@@ -132,3 +132,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 INTERNAL_IPS = ['127.0.0.1', ]
+
+EMAIL_HOST = 'smtp.ukr.net'
+EMAIL_PORT = 465  # 2525
+EMAIL_HOST_USER = 'email-1'
+EMAIL_HOST_PASSWORD = 'pass'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
