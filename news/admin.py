@@ -1,11 +1,22 @@
 from django.contrib import admin
+from django import forms
 from django.utils.safestring import mark_safe
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from .models import News, Category
 
 
+class NewsAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = News
+        fields = '__all__'
+
+
 # редактирование отображения данных в админке ( настройка админки )
 class NewsAdmin(admin.ModelAdmin):
+    form = NewsAdminForm  # подключение NewsAdminForm ( ckeditor_uploader ) в админку Django
     list_display = ('id', 'title', 'category', 'created_at', 'updated_at', 'is_published', 'get_photo')  # отображаемые поля в админ панеле
     list_display_links = ('id', 'title')  # поля которые являються ссылками к форме
     search_fields = ('title', 'content')  # поля по которым можно производить поиск
