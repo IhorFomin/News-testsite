@@ -24,6 +24,7 @@ import debug_toolbar
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('captcha/', include('captcha.urls')),
     path('', include('news.urls')),
 ]
 # Формирование маршрутов для медиа файлов в отладочном режиме

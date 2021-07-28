@@ -4,11 +4,13 @@ import re
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from captcha.fields import CaptchaField, CaptchaTextInput
 
 
 class ContactForm(forms.Form):
     subject = forms.CharField(label='Тема', widget=forms.TextInput(attrs={"class": "form-control"}))
     content = forms.CharField(label='Текст', widget=forms.Textarea(attrs={"class": "form-control", "rows": 5}))
+    captcha = CaptchaField()
 
 
 class UserLoginForm(AuthenticationForm):
