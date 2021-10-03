@@ -6,7 +6,19 @@
 </head>
 <body>
 
-<h1>Hello world!</h1>
+{% load mptt_tags %}
+<ul>
+    {% recursetree rubrics %}
+        <li>
+            <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
 
 </body>
 </html>
